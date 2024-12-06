@@ -96,6 +96,7 @@ public class Jabeja {
       partner.setColor(temp);
       numberOfSwaps++;
     }
+  }
 
   public Node findPartner(int nodeId, Integer[] nodes){
 
@@ -111,8 +112,9 @@ public class Jabeja {
       int dqq = getDegree(nodeq, nodeq.getColor());
       int dqp = getDegree(nodeq, nodep.getColor());
       int dpq = getDegree(nodep, nodeq.getColor());
-      int old = dpp+dqq;
-      double new_mine = dqp+dpq;
+      double alpha = config.getAlpha();
+      double old = Math.pow(dpp, alpha)+Math.pow(dqq, alpha);
+      double new_mine = Math.pow(dqp, alpha)+Math.pow(dpq, alpha);
       if (new_mine*T>old && new_mine>highestBenefit){
         highestBenefit = new_mine;
         bestPartner = nodeq;
