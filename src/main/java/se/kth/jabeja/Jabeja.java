@@ -89,11 +89,13 @@ public class Jabeja {
 
     // swap the colors
     // TODO
-    int temp;
-    temp=nodep.getColor();
-    nodep.setColor(partner.getColor());
-    partner.setColor(temp);
-  }
+    if (partner!=null) {
+      int temp;
+      temp=nodep.getColor();
+      nodep.setColor(partner.getColor());
+      partner.setColor(temp);
+      numberOfSwaps++;
+    }
 
   public Node findPartner(int nodeId, Integer[] nodes){
 
