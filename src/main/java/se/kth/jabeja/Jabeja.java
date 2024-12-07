@@ -19,6 +19,8 @@ public class Jabeja {
   private int round;
   private float T;
   private boolean resultFileCreated = false;
+  private SimulatedAnnealator annealer;
+  protected final Random randomGenerator = new Random();
 
   //-------------------------------------------------------------------
   public Jabeja(HashMap<Integer, Node> graph, Config config) {
@@ -28,6 +30,7 @@ public class Jabeja {
     this.numberOfSwaps = 0;
     this.config = config;
     this.T = config.getTemperature();
+    this.annealer = new SimulatedAnnealator(T);
   }
 
 
@@ -40,7 +43,8 @@ public class Jabeja {
 
       //one cycle for all nodes have completed.
       //reduce the temperature
-      saCoolDown();
+      //saCoolDown();
+      T = annealer.updateTemp();
       report();
     }
   }
@@ -49,6 +53,13 @@ public class Jabeja {
    * Simulated analealing cooling function
    */
   private void saCoolDown(){
+    // TODO for second task
+    if (T > 1)
+      T -= config.getDelta();
+    if (T < 1)
+      T = 1;
+  }
+  private void annealCoolDown(){
     // TODO for second task
     if (T > 1)
       T -= config.getDelta();
@@ -115,7 +126,9 @@ public class Jabeja {
       double alpha = config.getAlpha();
       double old = Math.pow(dpp, alpha)+Math.pow(dqq, alpha);
       double new_mine = Math.pow(dqp, alpha)+Math.pow(dpq, alpha);
-      if (new_mine*T>old && new_mine>highestBenefit){
+      double ap = annealer.acceptance_probability(old, new_mine);
+      double rand = randomGenerator.nextDouble();
+      if ((new_mine*T>old && new_mine>highestBenefit) || ap>rand){
         highestBenefit = new_mine;
         bestPartner = nodeq;
       }
