@@ -21,6 +21,7 @@ public class Jabeja {
   private boolean resultFileCreated = false;
   private SimulatedAnnealator annealer;
   protected final Random randomGenerator = new Random();
+  private double min_T=Math.pow(10,-5);
 
   //-------------------------------------------------------------------
   public Jabeja(HashMap<Integer, Node> graph, Config config) {
@@ -128,7 +129,7 @@ public class Jabeja {
       double new_mine = Math.pow(dqp, alpha)+Math.pow(dpq, alpha);
       double ap = annealer.acceptance_probability(old, new_mine);
       double rand = randomGenerator.nextDouble();
-      if ((new_mine*T>old && new_mine>highestBenefit) || ap>rand){
+      if ((new_mine*T>old && new_mine>highestBenefit) || (!(new_mine*T>old && new_mine>highestBenefit) && ap>rand)){
         highestBenefit = new_mine;
         bestPartner = nodeq;
       }
