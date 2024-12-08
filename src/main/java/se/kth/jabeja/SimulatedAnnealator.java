@@ -29,7 +29,10 @@ public class SimulatedAnnealator {
     }
 
     public float updateTemp(){
-        Temp*=alpha;
+        if (Temp>0.00001f){
+            Temp*=alpha;
+        }
+        //Temp*=alpha;
         return Temp;
     }
 
