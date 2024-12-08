@@ -33,6 +33,7 @@ public class SimulatedAnnealator {
             Temp*=alpha;
         }
         //Temp*=alpha;
+        else Temp = 0.00001f;
         return Temp;
     }
 
