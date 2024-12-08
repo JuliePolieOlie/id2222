@@ -129,8 +129,9 @@ public class Jabeja {
       double new_mine = Math.pow(dqp, alpha)+Math.pow(dpq, alpha);
       double ap = annealer.acceptance_probability(old, new_mine);
       double rand = randomGenerator.nextDouble();
-      if (ap>rand){
-        highestBenefit = new_mine;
+      
+      if (new_mine!=old && ap>rand && ap>highestBenefit){
+        highestBenefit = ap;
         bestPartner = nodeq;
       }
 
