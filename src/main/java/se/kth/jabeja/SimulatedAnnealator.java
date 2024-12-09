@@ -71,24 +71,22 @@ public class SimulatedAnnealator {
         double deltaCost = new_c - old_c;
         double expValue = -deltaCost / (Temp * log(1 + rounds + 1));
         double prob = 1 / (1 + exp(expValue));
-        System.out.println("Improved Acceptance Probability: " + prob);
         return Math.min(1.0, prob);
     }
     //optional2
         /**
-     * 方程 4：对数缩放退火公式
+     * 对数缩放退火公式
      */
-    public double acceptance_probability4(double old_c, double new_c) {
+    public double acceptance_probability(double old_c, double new_c) {
         double deltaCost = new_c - old_c;
         double ap = exp(-deltaCost / (Temp * log(rounds + 2)));
-        System.out.println("Logarithmic Acceptance Probability: " + ap);
         return Math.min(1.0, ap);
     }
     //optional3
         /**
-     * 方程 5：Sigmoid 函数公式
+     *Sigmoid 函数公式, work
      */
-    public double acceptance_probability5(double old_c, double new_c) {
+    public double acceptance_probability4(double old_c, double new_c) {
         double deltaCost = new_c - old_c;
         double expValue = -deltaCost / (Temp * log(1 + rounds + 1));
         double prob = 1 / (1 + exp(expValue));
@@ -97,9 +95,9 @@ public class SimulatedAnnealator {
     }
     //optional4
         /**
-     * 方程 6：自适应退火公式
+     * does not work, worse
      */
-    public double acceptance_probability(double old_c, double new_c) {
+    public double acceptance_probability5(double old_c, double new_c) {
         double deltaCost = new_c - old_c;
         double scalingFactor = 1 + (rounds / 100.0);  // 自适应缩放因子
         double prob = exp(-deltaCost / (Temp * scalingFactor));
