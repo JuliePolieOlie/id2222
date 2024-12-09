@@ -31,7 +31,7 @@ public class SimulatedAnnealator {
     public void setTemp(float temp) {
         Temp = temp;
     }
-    public float updateTemp() {
+    public float updateTemp2() {
         if (Temp > MIN_TEMP) {
             Temp *= alpha;  // 降温
         } else {
@@ -50,19 +50,19 @@ public class SimulatedAnnealator {
         System.out.println("Updated Temperature: " + Temp);
         return Temp;
     }
-    public float updateTemp2(){
+    public float updateTemp(){
         if (Temp>0.00001f){
             Temp*=alpha;
         }
         //Temp*=alpha;
         return Temp;
     }
-    public double acceptance_probability(double old_c, double new_c) {
+    public double acceptance_probability2(double old_c, double new_c) {
         double ap = exp((new_c - old_c) / Math.max(Temp, MIN_TEMP));
         return Math.min(1.0, ap);  // 确保概率在 [0, 1] 内
     }
 
-    public double acceptance_probability2(double old_c, double new_c) {
+    public double acceptance_probability(double old_c, double new_c) {
         double ap = exp((new_c-old_c)/Temp);
         if (ap>1) return 1;
         else return ap;
