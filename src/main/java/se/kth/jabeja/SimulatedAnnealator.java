@@ -67,7 +67,7 @@ public class SimulatedAnnealator {
     /**
      * 指数退火接受概率公式
      */
-    public double acceptance_probability1(double old_c, double new_c) {
+    public double acceptance_probability(double old_c, double new_c) {
         double deltaCost = new_c - old_c;
         double expValue = -deltaCost / (Temp * log(1 + rounds + 1));
         double prob = 1 / (1 + exp(expValue));
@@ -109,7 +109,7 @@ public class SimulatedAnnealator {
     
 
     //original
-    public double acceptance_probability(double old_c, double new_c) {
+    public double acceptance_probability1(double old_c, double new_c) {
         double ap = exp((new_c-old_c)/Temp);
         if (ap>1) return 1;
         else return ap;
