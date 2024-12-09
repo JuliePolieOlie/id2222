@@ -103,7 +103,7 @@ public class SimulatedAnnealator {
         double deltaCost = new_c - old_c;
         double scalingFactor = 1 + (rounds / 100.0);  // 自适应缩放因子
         double prob = exp(-deltaCost / (Temp * scalingFactor));
-        System.out.println("Adaptive Acceptance Probability: " + prob);
+        //System.out.println("Adaptive Acceptance Probability: " + prob);
         return Math.min(1.0, prob);
     }
     
