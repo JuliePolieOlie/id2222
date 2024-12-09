@@ -88,7 +88,7 @@ public class SimulatedAnnealator {
         /**
      * 方程 5：Sigmoid 函数公式
      */
-    public double acceptance_probability(double old_c, double new_c) {
+    public double acceptance_probability5(double old_c, double new_c) {
         double deltaCost = new_c - old_c;
         double expValue = -deltaCost / (Temp * log(1 + rounds + 1));
         double prob = 1 / (1 + exp(expValue));
@@ -99,7 +99,7 @@ public class SimulatedAnnealator {
         /**
      * 方程 6：自适应退火公式
      */
-    public double acceptance_probability6(double old_c, double new_c) {
+    public double acceptance_probability(double old_c, double new_c) {
         double deltaCost = new_c - old_c;
         double scalingFactor = 1 + (rounds / 100.0);  // 自适应缩放因子
         double prob = exp(-deltaCost / (Temp * scalingFactor));
