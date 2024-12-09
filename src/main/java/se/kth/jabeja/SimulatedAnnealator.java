@@ -61,8 +61,20 @@ public class SimulatedAnnealator {
         double ap = exp((new_c - old_c) / Math.max(Temp, MIN_TEMP));
         return Math.min(1.0, ap);  // 确保概率在 [0, 1] 内
     }
+    
+    public double acceptance_probability(double oldCost, double newCost) {
+        double deltaCost = newCost - oldCost;
 
-    public double acceptance_probability(double old_c, double new_c) {
+        // 改进的接受概率公式：动态缩放
+        double expValue = -deltaCost / (Temp * Math.log(1 + rounds + 1));
+        double prob = 1 / (1 + exp(expValue));
+
+        // 确保概率在 [0, 1] 内
+        System.out.println("Improved Acceptance Probability: " + prob);
+        return Math.min(1.0, prob);
+    }
+
+    public double acceptance_probability3(double old_c, double new_c) {
         double ap = exp((new_c-old_c)/Temp);
         if (ap>1) return 1;
         else return ap;
