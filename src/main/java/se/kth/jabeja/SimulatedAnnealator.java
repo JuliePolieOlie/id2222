@@ -1,6 +1,7 @@
 package se.kth.jabeja;
 import se.kth.jabeja.Node;
 import static java.lang.Math.exp;
+import static java.lang.Math.log; 
 
 public class SimulatedAnnealator {
     float Temp;
