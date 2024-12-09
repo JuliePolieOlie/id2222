@@ -31,7 +31,9 @@ public class SimulatedAnnealator {
     public void setTemp(float temp) {
         Temp = temp;
     }
-    public float updateTemp2() {
+    
+    //task2.2
+    public float updateTemp() {
         if (Temp > MIN_TEMP) {
             Temp *= alpha;  // 降温
         } else {
@@ -50,31 +52,63 @@ public class SimulatedAnnealator {
         System.out.println("Updated Temperature: " + Temp);
         return Temp;
     }
-    public float updateTemp(){
+    
+    // original
+    public float updateTemp2(){
         if (Temp>0.00001f){
             Temp*=alpha;
         }
         //Temp*=alpha;
         return Temp;
     }
-    public double acceptance_probability2(double old_c, double new_c) {
-        double ap = exp((new_c - old_c) / Math.max(Temp, MIN_TEMP));
-        return Math.min(1.0, ap);  // 确保概率在 [0, 1] 内
-    }
-    
-    public double acceptance_probability(double oldCost, double newCost) {
-        double deltaCost = newCost - oldCost;
 
-        // 改进的接受概率公式：动态缩放
-        double expValue = -deltaCost / (Temp * Math.log(1 + rounds + 1));
+    //optional1 
+    /**
+     * 指数退火接受概率公式
+     */
+    public double acceptance_probability(double old_c, double new_c) {
+        double deltaCost = new_c - old_c;
+        double expValue = -deltaCost / (Temp * log(1 + rounds + 1));
         double prob = 1 / (1 + exp(expValue));
-
-        // 确保概率在 [0, 1] 内
         System.out.println("Improved Acceptance Probability: " + prob);
         return Math.min(1.0, prob);
     }
+    //optional2
+        /**
+     * 方程 4：对数缩放退火公式
+     */
+    public double acceptance_probability4(double old_c, double new_c) {
+        double deltaCost = new_c - old_c;
+        double ap = exp(-deltaCost / (Temp * log(rounds + 2)));
+        System.out.println("Logarithmic Acceptance Probability: " + ap);
+        return Math.min(1.0, ap);
+    }
+    //optional3
+        /**
+     * 方程 5：Sigmoid 函数公式
+     */
+    public double acceptance_probability5(double old_c, double new_c) {
+        double deltaCost = new_c - old_c;
+        double expValue = -deltaCost / (Temp * log(1 + rounds + 1));
+        double prob = 1 / (1 + exp(expValue));
+        System.out.println("Sigmoid Acceptance Probability: " + prob);
+        return Math.min(1.0, prob);
+    }
+    //optional4
+        /**
+     * 方程 6：自适应退火公式
+     */
+    public double acceptance_probability6(double old_c, double new_c) {
+        double deltaCost = new_c - old_c;
+        double scalingFactor = 1 + (rounds / 100.0);  // 自适应缩放因子
+        double prob = exp(-deltaCost / (Temp * scalingFactor));
+        System.out.println("Adaptive Acceptance Probability: " + prob);
+        return Math.min(1.0, prob);
+    }
+    
 
-    public double acceptance_probability3(double old_c, double new_c) {
+    //original
+    public double acceptance_probability2(double old_c, double new_c) {
         double ap = exp((new_c-old_c)/Temp);
         if (ap>1) return 1;
         else return ap;
